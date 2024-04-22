@@ -1,0 +1,9 @@
+server:
+  port: ":8080"
+database:
+  master: "root:@tcp(localhost:3306)/master"
+api:
+swagger:
+  host: ""
+  schemes:
+    - https

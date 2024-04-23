@@ -9,6 +9,13 @@ import (
 
 type ProjectHandler interface {
 	GetAllUser(w http.ResponseWriter, r *http.Request)
+	SearchUserByNameAndttl(w http.ResponseWriter, r *http.Request)
+	GetAllUserPagination(w http.ResponseWriter, r *http.Request)
+	GetUserByKwn(w http.ResponseWriter, r *http.Request)
+	SearchUserDataByName(w http.ResponseWriter, r *http.Request)
+	SearchUserDataByKwn(w http.ResponseWriter, r *http.Request)
+	SearchUserDataByKwnOrName(w http.ResponseWriter, r *http.Request)
+	InsertDataUser(w http.ResponseWriter, r *http.Request)
 }
 
 // Server ...

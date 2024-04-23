@@ -29,14 +29,66 @@ const (
 	qGetKeluargaByID = `SELECT UserID, Hubungan, Nama, TanggalLahir
 	FROM keluarga
 	WHERE UserID = ?`
+
+	searchUserByNameAndttl  = "SearchUserByNameAndttl"
+	qSearchUserByNameAndttl = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
+	FROM user
+	WHERE UserName = ? AND TanggalLahir = ?`
+
+	getAllUserPagination  = "GetAllUserPagination"
+	qGetAllUserPagination = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
+	FROM user
+	LIMIT ? OFFSET ?`
+
+	getTotalAllUser  = "GetTotalAllUser"
+	qGetTotalAllUser = `SELECT COUNT(*) AS Total
+	FROM user`
+
+	getUserByKwn  = "GetUserByKwn"
+	qGetUserByKwn = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
+	FROM user
+	WHERE Kewarganegaraan = ?`
+
+	searchUserDataByName  = "SearchUserDataByName"
+	qSearchUserDataByName = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
+	FROM user
+	WHERE UserName LIKE '%?%`
+
+	searchUserDataByKwn  = "SearchUserDataByKwn"
+	qSearchUserDataByKwn = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
+	FROM user
+	WHERE Kewarganegaraan LIKE '%?%`
+
+	searchUserDataByKwnOrName  = "SearchUserDataByKwnOrName"
+	qSearchUserDataByKwnOrName = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
+	FROM user
+	WHERE Kewarganegaraan LIKE '%?% OR UserName LIKE '%?%'`
+
+	insertUser  = "InsertUser"
+	qInsertUser = `INSERT INTO user(UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon)
+	VALUES(?, ?, ?, ?, ?, ?)`
+
+	insertKeluarga  = "InsertKeluarga"
+	qInsertKeluarga = `INSERT INTO user(UserID, Hubungan, Nama, TanggalLahir)
+	VALUES(?, ?, ?, ?)`
 )
 
 var (
 	readStmt = []statement{
 		{getAllUser, qGetAllUser},
 		{getKeluargaByID, qGetKeluargaByID},
+		{searchUserByNameAndttl, qSearchUserByNameAndttl},
+		{getAllUserPagination, qGetAllUserPagination},
+		{getTotalAllUser, qGetTotalAllUser},
+		{getUserByKwn, qGetUserByKwn},
+		{searchUserDataByName, qSearchUserDataByName},
+		{searchUserDataByKwn, qSearchUserDataByKwn},
+		{searchUserDataByKwnOrName, qSearchUserDataByKwnOrName},
 	}
-	insertStmt = []statement{}
+	insertStmt = []statement{
+		{insertUser, qInsertUser},
+		{insertKeluarga, qInsertKeluarga},
+	}
 	updateStmt = []statement{}
 	deleteStmt = []statement{}
 )

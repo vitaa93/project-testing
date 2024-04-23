@@ -33,7 +33,7 @@ const (
 	searchUserByNameAndttl  = "SearchUserByNameAndttl"
 	qSearchUserByNameAndttl = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
 	FROM user
-	WHERE UserName = ? AND TanggalLahir = ?`
+	WHERE UserName LIKE CONCAT(?,'%') AND TanggalLahir = ?`
 
 	getAllUserPagination  = "GetAllUserPagination"
 	qGetAllUserPagination = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
@@ -44,32 +44,27 @@ const (
 	qGetTotalAllUser = `SELECT COUNT(*) AS Total
 	FROM user`
 
-	getUserByKwn  = "GetUserByKwn"
-	qGetUserByKwn = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
-	FROM user
-	WHERE Kewarganegaraan = ?`
-
 	searchUserDataByName  = "SearchUserDataByName"
 	qSearchUserDataByName = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
 	FROM user
-	WHERE UserName LIKE '%?%`
+	WHERE UserName = ?`
 
 	searchUserDataByKwn  = "SearchUserDataByKwn"
 	qSearchUserDataByKwn = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
 	FROM user
-	WHERE Kewarganegaraan LIKE '%?%`
+	WHERE Kewarganegaraan = ?`
 
 	searchUserDataByKwnOrName  = "SearchUserDataByKwnOrName"
 	qSearchUserDataByKwnOrName = `SELECT UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon
 	FROM user
-	WHERE Kewarganegaraan LIKE '%?% OR UserName LIKE '%?%'`
+	WHERE Kewarganegaraan LIKE CONCAT('%',?,'%') OR UserName LIKE CONCAT('%',?,'%')`
 
 	insertUser  = "InsertUser"
 	qInsertUser = `INSERT INTO user(UserName, TanggalLahir, Kewarganegaraan, UserEmail, UserID, Telepon)
 	VALUES(?, ?, ?, ?, ?, ?)`
 
 	insertKeluarga  = "InsertKeluarga"
-	qInsertKeluarga = `INSERT INTO user(UserID, Hubungan, Nama, TanggalLahir)
+	qInsertKeluarga = `INSERT INTO keluarga(UserID, Hubungan, Nama, TanggalLahir)
 	VALUES(?, ?, ?, ?)`
 )
 
@@ -80,7 +75,6 @@ var (
 		{searchUserByNameAndttl, qSearchUserByNameAndttl},
 		{getAllUserPagination, qGetAllUserPagination},
 		{getTotalAllUser, qGetTotalAllUser},
-		{getUserByKwn, qGetUserByKwn},
 		{searchUserDataByName, qSearchUserDataByName},
 		{searchUserDataByKwn, qSearchUserDataByKwn},
 		{searchUserDataByKwnOrName, qSearchUserDataByKwnOrName},

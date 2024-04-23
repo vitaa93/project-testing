@@ -64,22 +64,6 @@ func (h *Handler) GetAllUserPagination(w http.ResponseWriter, r *http.Request) {
 	resp.Metadata = metadata
 }
 
-func (h *Handler) GetUserByKwn(w http.ResponseWriter, r *http.Request) {
-	resp := response.Response{}
-	defer resp.RenderJSON(w, r)
-
-	ctx := r.Context()
-
-	result, err := h.projectSvc.GetUserByKwn(ctx, r.FormValue("kewarganegaraan"))
-	if err != nil {
-		log.Println("[ERROR]Handler GetUserByKwn", err.Error())
-		resp.Data = result
-		return
-	}
-
-	resp.Data = result
-}
-
 func (h *Handler) SearchUserDataByName(w http.ResponseWriter, r *http.Request) {
 	resp := response.Response{}
 	defer resp.RenderJSON(w, r)

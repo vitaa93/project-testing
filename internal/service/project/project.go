@@ -32,7 +32,7 @@ func (s Service) SearchUserByNameAndttl(ctx context.Context, name string, ttl st
 	if name == "" {
 		message = "Harap mengisi nama anda"
 		return result, message, err
-	} else if ttl == "" {
+	} else if ttl == "" { // yyyymmdd
 		message = "Harap mengisi tanggal lahir anda"
 		return result, message, err
 	}
@@ -56,6 +56,7 @@ func (s Service) SearchUserByNameAndttl(ctx context.Context, name string, ttl st
 func (s Service) GetAllUserPagination(ctx context.Context, limit, offset int) ([]project.User, interface{}, error) {
 	var metadata = make(map[string]interface{})
 
+	offset -= 1
 	metadata["maxpage"] = 1
 	metadata["totaldata"] = 0
 	result, err := s.data.GetAllUserPagination(ctx, limit, offset)
@@ -85,26 +86,7 @@ func (s Service) GetAllUserPagination(ctx context.Context, limit, offset int) ([
 	return result, metadata, err
 }
 
-func (s Service) GetUserByKwn(ctx context.Context, kewarganegaraan string) ([]project.User, error) {
-	var result []project.User
-	var err error
-
-	result, err = s.data.GetUserByKwn(ctx, kewarganegaraan)
-	if err != nil {
-		log.Println("ERROR GetUserByKwn", err.Error())
-		return result, err
-	}
-	for k, v := range result {
-		keluargaDet, err := s.data.GetKeluargaByID(ctx, v.UserID)
-		if err != nil {
-			log.Println("ERROR GetUserByKwn-GetKeluargaByID", err.Error())
-			return result, err
-		}
-		result[k].Keluarga = keluargaDet[v.UserID]
-	}
-	return result, err
-}
-
+// hanya bisa digunakan jika parameter tiidak ada spasi (nama hanya satu kata)
 func (s Service) SearchUserDataByName(ctx context.Context, keyword string) ([]project.User, error) {
 	var result []project.User
 	var err error
@@ -125,6 +107,7 @@ func (s Service) SearchUserDataByName(ctx context.Context, keyword string) ([]pr
 	return result, err
 }
 
+// hanya bisa digunakan jika parameter tiidak ada spasi (kewarganegaraan hanya satu kata)
 func (s Service) SearchUserDataByKwn(ctx context.Context, keyword string) ([]project.User, error) {
 	var result []project.User
 	var err error

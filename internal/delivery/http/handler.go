@@ -24,7 +24,6 @@ func (s *Server) Handler() *mux.Router {
 	project.HandleFunc("/getalluser", s.Project.GetAllUser).Methods("GET")
 	project.HandleFunc("/getuserdatasearchby", s.Project.SearchUserByNameAndttl).Methods("GET")
 	project.HandleFunc("/getalluserpagination", s.Project.GetAllUserPagination).Methods("GET")
-	project.HandleFunc("/getuserbykewarganegaraan", s.Project.GetUserByKwn).Methods("GET")
 	project.HandleFunc("/searchuserbyname", s.Project.SearchUserDataByName).Methods("GET")
 	project.HandleFunc("/searchuserbykwn", s.Project.SearchUserDataByKwn).Methods("GET")
 	project.HandleFunc("/searchuserbykwnorname", s.Project.SearchUserDataByKwnOrName).Methods("GET")

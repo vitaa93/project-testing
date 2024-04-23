@@ -115,30 +115,6 @@ func (d Data) GetTotalAllUser(ctx context.Context) (int, error) {
 	return result, err
 }
 
-func (d Data) GetUserByKwn(ctx context.Context, kewarganegaraan string) ([]project.User, error) {
-	var (
-		results []project.User
-		result  project.User
-		err     error
-	)
-
-	rows, err := d.stmt[getUserByKwn].QueryxContext(ctx, kewarganegaraan)
-	if err != nil {
-		return results, errors.Wrap(err, "[DATA][GetUserByKwn]")
-	}
-
-	defer rows.Close()
-
-	for rows.Next() {
-		if err = rows.StructScan(&result); err != nil {
-			return results, errors.Wrap(err, "[DATA][GetUserByKwn]")
-		}
-		results = append(results, result)
-	}
-
-	return results, err
-}
-
 func (d Data) SearchUserDataByName(ctx context.Context, keyword string) ([]project.User, error) {
 	var (
 		results []project.User
